@@ -4,7 +4,8 @@ data class SvgReport(val valid:Boolean,val errors:List<String>,val warnings:List
 object SvgTools {
  fun extract(raw:String):String {
   val text=Regex("```(?:svg|xml)?\\s*([\\s\\S]*?)```",RegexOption.IGNORE_CASE).find(raw)?.groupValues?.get(1)?:raw
-  val a=text.indexOf("<svg",true); val b=text.lastIndexOf("</svg>",true)
+  val a=text.indexOf("<svg", ignoreCase = true)
+  val b=text.lastIndexOf("</svg>", ignoreCase = true)
   require(a>=0 && b>a){"模型未返回完整 SVG"}; return text.substring(a,b+6).trim()
  }
  fun check(s:String):SvgReport {
